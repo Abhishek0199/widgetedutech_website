@@ -1,0 +1,55 @@
+<% include ../partials/header %>
+  <div class="main">
+    <div class="register-form">
+      <div class="main-div">
+        <div class="panel">
+          <h2>Register</h2>
+          <!--
+          <p>Please enter your email and Password</p>  -->
+        </div>
+        <form id="register" method="post" action="/newUserRegister">
+          <div class="form-group labels"><label for="username">Username:</label></div>
+          <div class="form-group inputs"><input type="text" name="username" class="form-control" placeholder="username"></div>
+		  <div class="form-group labels"><label for="Full Name">Full Name:</label></div>
+          <div class="form-group inputs"><input type="text" name="fullName" class="form-control" placeholder="fullName"></div>
+          <div class="form-group labels"><label for="email">Email:</label></div>
+          <div class="form-group">
+            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address">
+          </div>
+          <div class="form-group labels"><label for="emailConfirm">Confirm Email:</label></div>
+          <div class="form-group">
+            <input type="email" name="emailConfirm" class="form-control" id="inputConfiEmail" placeholder="Enter Email Address again" onblur="confirmEmail()">
+            <script type="text/javascript">
+            function confirmEmail() {
+              var email = document.getElementById("inputEmail").value
+              var confiEmail = document.getElementById("inputConfiEmail").value
+              if (email!=confiEmail) {
+                alert('Email not matching');
+              }
+            }
+            </script>
+          </div>
+          <div class="form-group labels"><label for="password">Password:</label></div>
+          <div class="form-group">
+            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+          </div>
+          <div class="form-group labels"><label for="mobileNumber">Mobile Number:</label></div>
+          <div class="form-group">
+            <input type="text" name="mobileNumber" class="form-control" id="inputEmail" placeholder="Enter mobile number with country code">
+          </div>
+		  <div class="form-group">
+            <input type="hidden" name="usertype" class="form-control" id="usertype" value="<%=usertype %>">
+          </div>
+          <div class="login">
+            <a href="/login">Already registered? Login here</a>
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+
+
+        </form>
+        </div>
+      </div>
+    </div>
+
+
+ <% include ../partials/footer %>

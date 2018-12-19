@@ -1,0 +1,62 @@
+<% include ./partials/header %>
+
+<style>
+  .container{
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+  }
+
+</style>
+
+<div class="container">
+        <div class="panel panel-default">
+          <h2>Registration</h2>
+        </div>
+        <form id="register" method="post" action="/newUserRegister">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="username">Username:</label>
+            <input type="text" name="username" class="form-control" placeholder="username">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="mobileNumber">Mobile Number:</label>
+            <input type="text" name="mobileNumber" class="form-control" id="inputEmail" placeholder="Enter mobile number with country code">
+          </div>
+         </div>
+         <div class="row">
+          <div class="form-group col-md-6">
+            <label for="email">Email:</label>
+            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="emailConfirm">Confirm Email:</label>
+            <input type="email" name="emailConfirm" class="form-control" id="inputConfiEmail" placeholder="Enter Email Address again" onblur="confirmEmail()">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="password">Password:</label>
+            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+          </div>
+        </div>
+        <div class="container col-6 text-center">
+          <a href="/login">Already registered? Login here</a><br>
+          <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </div>
+
+
+        </form>
+
+</div>
+
+<script>
+function confirmEmail() {
+  var email = document.getElementById("inputEmail").value
+  var confiEmail = document.getElementById("inputConfiEmail").value
+  if (email!=confiEmail) {
+    alert('Email not matching');
+  }
+}
+</script>
+
+ <% include ./partials/footer %>

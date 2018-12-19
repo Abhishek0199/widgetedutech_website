@@ -1,0 +1,142 @@
+<% include ../partials/header %>
+
+
+<style media="screen">
+  .container{
+    padding: 2vh 0 2vh 0;
+  }
+</style>
+
+    <div class="container">
+      <div class="panel text-center">
+        <h3>Register as Instructor</h3>
+      </div>
+        <form method="post" action="/beinstructor">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="username">Username:</label>
+              <input type="text" name="inst[username]" class="form-control" placeholder="Username">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Full Name">Full Name:</label>
+              <input type="text" name="inst[fullName]" class="form-control" placeholder="FullName">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="email">Email:</label>
+              <input type="email" name="inst[email]" class="form-control" id="inputEmail" placeholder="Email Address">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="emailConfirm">Confirm Email:</label>
+              <input type="email" name="emailConfirm" class="form-control" id="inputConfiEmail" placeholder="Enter Email Address again" onblur="confirmEmail()">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+             <label for="password">Password:</label>
+             <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="mobileNumber">Mobile Number:</label>
+              <input type="text" name="inst[mobileNumber]" class="form-control" id="inputMobNo" placeholder="Enter mobile number with country code">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-3">
+             <label for="ctry">Country:</label>
+             <input type="text" name="inst[coutry]" class="form-control" id="ctry" placeholder="Country">
+            </div>
+            <div class="form-group col-md-3">
+             <label for="state">State:</label>
+             <input type="text" name="inst[state]" class="form-control" id="state" placeholder="State">
+            </div>
+            <div class="form-group col-md-3">
+             <label for="city">City:</label>
+             <input type="text" name="inst[city]" class="form-control" id="city" placeholder="City">
+            </div>
+            <div class="form-group col-md-3">
+             <label for="zip">ZipCode:</label>
+             <input type="text" name="inst[pinCode]" class="form-control" id="zip" placeholder="ZipCode">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="teachexp">Teaching Experience (in Years):</label>
+              <input type="text" name="inst[teachExp]" class="form-control" id="teachexp" placeholder = "Teaching Experience">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="sub">Subjects:</label>
+              <select id="sub" class="form-control" name="inst[subjects]" multiple="multiple">
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Maths">Maths</option>
+                <option value="Biology">Biology</option>
+                <option value="History">History</option>
+                <option value="Political Science">Political Science</option>
+                <option value="Geography">Geography</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="class">Classes you can Teach:</label>
+              <select id="class" class="form-control" name="inst[class]" multiple="multiple">
+                <option value="Class 1-3">Class 1-3</option>
+                <option value="Class 4-5">Class 4-5</option>
+                <option value="Class 6-8">Class 6-8</option>
+                <option value="Class 9-10">Class 9-10</option>
+                <option value="Class 11-12">Class 11-12</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lang">Proficient Languages:</label>
+              <select id="lang" class="form-control" name="inst[language]" multiple="multiple">
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Marathi">Marathi</option>
+                <option value="Gujrati">Gujrati</option>
+                <option value="Punjabi">Punjabi</option>
+                <option value="Rajasthani">Rajasthani</option>
+                <option value="Odisa">Odisa</option>
+                <option value="Kashmiri">Kashmiri</option>
+              </select>
+            </div>
+          </div>
+          <div class="row col-md-10">
+            <label for="area1"> Cover Letter/ About Yourself: </label>
+            <textarea id="area1" cols="100" rows="5" name="inst[resume]"> Few lines that Describe You! </textarea>
+          </div>
+        <div class="container text-center col-6">
+          <div class="login">
+            <a href="/login">Already registered? Login here</a>
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+        </form>
+        </div>
+
+<script src="multiselect.min.js"></script>
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+
+
+<script>
+  $('#sub').multiselect();
+  $('#class').multiselect();
+  $('#lang').multiselect();
+  nicEditors.allTextAreas();
+</script>
+
+<%
+  function confirmEmail() {
+    var email = document.getElementById("inputEmail").value
+    var confiEmail = document.getElementById("inputConfiEmail").value
+    if (email!=confiEmail) {
+      alert('Email not matching');
+    }
+  }%>
+
+
+ <% include ../partials/footer %>

@@ -1,0 +1,12 @@
+<% include ./partials/header %>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Verify Email</h5>
+    <form method="post" href="/verify-email">
+      <label for="verificationCode">Verfication Code:</label>
+      <input type="text" name="verificationCode" class="form-control" placeholder="Enter OTP">
+      <button type="submit" class="btn btn-primary">Verify Code</button>
+    </form>
+  </div>
+</div>
+<% include ./partials/footer %>

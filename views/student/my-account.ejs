@@ -1,0 +1,258 @@
+<% include ../partials/header %>
+  <script src="/js/student_myAccount.js" charset="utf-8"></script>
+  <div class="row"><div class="main">
+
+    <div id="myAccFlip" class="border-top border-right border-left rounded-top text-center">
+  My Account
+    </div>
+    <div id="myAccPanel" class="border-right border-left border-bottom rounded-bottom">
+      <form>
+        <div class="form-group">
+          <label for="fullName">Full Name:</label>
+          <input type="text" class="form-control" id="fullName">
+        </div>
+        <div class="form-group">
+          <label for="class">Class:</label>
+          <input type="text" class="form-control" id="class">
+        </div>
+
+        <!-- To add any new field use this template:
+****
+<form>
+  <div class="form-group">
+    <label for="">--</label>
+    <input type="text" class="form-control" id="">
+  </div>
+</form>
+****
+-->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+  </div>
+
+
+  <div id="courseDetailFlip" class="border-top border-right border-left rounded-top text-center">
+  Course Details
+  </div>
+  <div id="courseDetailPanel" class="border-right border-left border-bottom rounded-bottom">
+    <div class="d-flex flex-row justify-content-around">
+      <button class="btn btn-outline-info p-2" type="button" id="classNineToggleButton" data-toggle="modal" data-target="#classNineModal">
+        Class 9
+      </button>
+      <button class="btn btn-outline-info p-2" type="button" id="classTenToggleButton" data-toggle="modal" data-target="#classTenModal">
+        Class 10
+      </button>
+      <button class="btn btn-outline-info p-2" type="button" id="classElevenToggleButton" data-toggle="modal" data-target="#classElevenModal">
+        Class 11
+      </button>
+      <button class="btn btn-outline-info p-2" type="button" id="classTwelveToggleButton" data-toggle="modal" data-target="#classTwelveModal">
+        Class 12
+      </button>
+    </div>
+    <!-- Class 9 Modal-->
+    <div class="modal fade" id="classNineModal" tabindex="-1" role="dialog" aria-labelledby="classNineModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classNineModalLabel">Class 9</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+        <button type="button" id="classNinePhysicsTab" class="btn btn-link nav-link active" href="#classNinePhysics" data-toggle="tab" role="tab">Physics</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classNineChemistryTab" class="btn btn-link nav-link" href="#classNineChemistry" data-toggle="tab" role="tab">Chemistry</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classNineMathsTab" class="btn btn-link nav-link" href="#classNineMaths" data-toggle="tab" role="tab">Maths</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classNineBiologyTab" class="btn btn-link nav-link" href="#classNineBiology" data-toggle="tab" role="tab">Biology</button>
+        </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="classNinePhysics" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classNineChemistry" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classNineMaths" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classNineBiology" role="tabpanel">
+            put topics here
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- class 10 modal-->
+    <div class="modal fade" id="classTenModal" tabindex="-1" role="dialog" aria-labelledby="classTenModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classTenModalLabel">Class 10</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+        <button type="button" id="classTenPhysicsTab" class="btn btn-link nav-link active" href="#classTenPhysics" data-toggle="tab" role="tab">Physics</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classTenChemistryTab" class="btn btn-link nav-link" href="#classTenChemistry" data-toggle="tab" role="tab">Chemistry</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classTenMathsTab" class="btn btn-link nav-link" href="#classTenMaths" data-toggle="tab" role="tab">Maths</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classTenBiologyTab" class="btn btn-link nav-link" href="#classTenBiology" data-toggle="tab" role="tab">Biology</button>
+        </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="classTenPhysics" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classTenChemistry" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classTenMaths" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classTenBiology" role="tabpanel">
+            put topics here
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!--class 11 modal-->
+    <div class="modal fade" id="classElevenModal" tabindex="-1" role="dialog" aria-labelledby="classElevenModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classElevenModalLabel">Class 11</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+        <button type="button" id="classElevenPhysicsTab" class="btn btn-link nav-link active" href="#classElevenPhysics" data-toggle="tab" role="tab">Physics</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classElevenChemistryTab" class="btn btn-link nav-link" href="#classElevenChemistry" data-toggle="tab" role="tab">Chemistry</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classElevenMathsTab" class="btn btn-link nav-link" href="#classElevenMaths" data-toggle="tab" role="tab">Maths</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classElevenBiologyTab" class="btn btn-link nav-link" href="#classElevenBiology" data-toggle="tab" role="tab">Biology</button>
+        </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="classElevenPhysics" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classElevenChemistry" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classElevenMaths" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classElevenBiology" role="tabpanel">
+            put topics here
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- class 12 modal-->
+    <div class="modal fade" id="classTwelveModal" tabindex="-1" role="dialog" aria-labelledby="classTwelveModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classTwelveModalLabel">Class 12</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+        <button type="button" id="classTwelvePhysicsTab" class="btn btn-link nav-link active" href="#classTwelvePhysics" data-toggle="tab" role="tab">Physics</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classTwelveChemistryTab" class="btn btn-link nav-link" href="#classTwelveChemistry" data-toggle="tab" role="tab">Chemistry</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classTwelveMathsTab" class="btn btn-link nav-link" href="#classTwelveMaths" data-toggle="tab" role="tab">Maths</button>
+        </li>
+        <li class="nav-item">
+        <button type="button" id="classTwelveBiologyTab" class="btn btn-link nav-link" href="#classTwelveBiology" data-toggle="tab" role="tab">Biology</button>
+        </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="classTwelvePhysics" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classTwelveChemistry" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classTwelveMaths" role="tabpanel">
+            put topics here
+          </div>
+          <div class="tab-pane fade" id="classTwelveBiology" role="tabpanel">
+            put topics here
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <!--
+    <div class="p-2">
+      <div class="collapse" id="classNineCard">
+        <div class="card card-body ">
+        <div class="d-flex flex-row justify-content-around">
+          <button type="button p-2" class="btn btn-link">Physics</button>
+          <button type="button p-2" class="btn btn-link">Chemistry</button>
+          <button type="button p-2" class="btn btn-link">Maths</button>
+          <button type="button p-2" class="btn btn-link">Biology</button>
+        </div>
+        </div>
+        </div>
+    </div>
+    -->
+
+
+  <div id="settingsFlip" class="border-top border-right border-left rounded-top text-center">
+  Settings
+  </div>
+  <div id="settingsPanel" class="border-right border-left border-bottom rounded-bottom">
+    <a href="#">Reset Your Password</a>
+  </div>
+
+  <div id="notiFlip" class="border-top border-right border-left rounded-top text-center">
+  Notifications
+  </div>
+  <div id="notiPanel" class="border-right border-left border-bottom rounded-bottom">
+  put stuff here
+  </div>
+    </div></div>
+<% include ../partials/footer %>

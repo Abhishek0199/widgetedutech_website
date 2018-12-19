@@ -1,0 +1,114 @@
+﻿.multiselect-wrapper {
+	width: 400px;
+	display: block;
+	white-space: nowrap;
+	font-size: 3vh;
+}
+
+.multiselect-wrapper .multiselect-input {
+	width: 100%;
+}
+
+.multiselect-wrapper label {
+	display: block;
+	font-size: 3vh;
+	font-weight : 400;
+}
+
+.multiselect-wrapper .multiselect-list {
+	z-index: 1;
+	position: absolute;
+	display: none;
+	background-color: white;
+	border: 2px solid rgba(200, 200, 200, 0.5);
+	border-radius: 4px;
+	margin-top: 0;
+}
+
+	.multiselect-wrapper .multiselect-list.active {
+		display: block;
+	}
+
+	.multiselect-wrapper .multiselect-list > span {
+		font-weight: bold;
+	}
+
+	.multiselect-wrapper .multiselect-list .multiselect-checkbox {
+		margin: 0 1.2vh 0 1.2vh;
+	}
+
+	.multiselect-wrapper .multiselect-list > span,
+	.multiselect-wrapper .multiselect-list li {
+		cursor: default;
+	}
+
+.multiselect-wrapper .multiselect-list {
+	padding: 5px;
+	min-width: 400px;
+}
+
+.multiselect-wrapper ul {
+	list-style: none;
+	display: block;
+	position: relative;
+	padding: 0px;
+	margin: 0px;
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+	.multiselect-wrapper ul li {
+		padding-right: 20px;
+		display: block;
+	}
+
+		.multiselect-wrapper ul li.active {
+			background-color: white;
+			color: black;
+		}
+
+		.multiselect-wrapper ul li:hover {
+			background-color: rgb(0, 102, 200);
+			color: white;
+		}
+
+.multiselect-input-div {
+	height: 7vh;
+}
+
+	.multiselect-input-div input{
+		border-radius: 6px;
+		border: 1px solid rgb(200, 200, 200);
+		background : #fff;
+		opacity: 0.65;
+		margin: 1px 0 6px 0;
+		padding:4px;
+		vertical-align:middle;
+	}
+
+.multiselect-count {
+	position: relative;
+	text-align: center;
+	border-radius: 2px;
+	behavior: url(/Content/Pie/pie.htc);
+	background-color: rgb(230, 230, 230);
+	color: black;
+	display: inline-block !important;
+	padding: 2px 7px;
+	left: -45px;
+}
+
+.multiselect-dropdown-arrow {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid black;
+	position: absolute;
+	line-height: 20px;
+	text-align: center;
+	display: inline-block !important;
+	margin-top: 17px;
+	margin-left: -42px;
+}
