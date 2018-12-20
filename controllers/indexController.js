@@ -7,18 +7,22 @@ var ValidateUser = require("../models/validateuser");
 var nodemailer = require("nodemailer");
 var mongoose = require("mongoose");
 var pdfUtil = require('pdf-to-text');
+var smtpTransport =  require('nodemailer-smtp-transport');
 
-var transporter = nodemailer.createTransport({
+var transport = nodemailer.createTransport(smtpTransport({
   //debug: true,
-  /*host: 'stmp.yahoo.com',
+  /*host: 'smtp.mail.yahoo.com',
   port: 587,
   secure: false, //true for 465, false for other ports*/
   service: 'Yahoo',
   auth: {
     user: 'shreyanshdixit204@yahoo.com',
     pass: 'Co52j^eKCG'
+  },
+  tls:{
+    rejectUnauthorized: false
   }
-});
+}));
 
 
 function randomString() {
@@ -36,35 +40,36 @@ function randomString() {
 
 function sendEmailValidate(email, validateString)
 {
-  console.log("Send Mesg started" + email);
-  var mailOptions = {
-    from: 'shreyanshdixit204@yahoo.com',
-    to: email,
-    subject: 'Email Verification - WidgetEduTech',
-    /*
-       for plain text body
-  	 ->	text: 'Just Testing!'
-    */
-
-    // html body
-    html: 'The mail has been sent from Node.js application! '+ validateString + '</p>'
-  };
-
-transporter.sendMail(mailOptions, (error, info) => {
-  if (error)
-  {
-    return console.log(error);
-  }
-  console.log('Email sent: ' + info.response);
-});
-var ValidateUser = {email: email, validationKey: validateString};
-
-ValidateUser.create({email: email, validationKey: validateString}, function(err, newlyCreated){
-  if(err){
-    console.log(err);
-  }
-});
-};
+  return new Promise((resolve, reject)=>{
+    console.log("Send Mesg started" + email);
+    var mailOptions = {
+      from: 'shreyanshdixit204@yahoo.com',
+      to: email,
+      subject: 'Email Verification - WidgetEduTech',
+      html: 'The mail has been sent from Node.js application! '+ validateString + '</p>'
+    };
+    transport.sendMail(mailOptions, (error, info) => {
+      if (error)
+      {
+        console.log(error);
+        reject('failed');
+      }
+      else{
+        console.log('Email sent: ' + info.response);
+        var obj = {email: email, validationKey: validateString};
+        ValidateUser.create(obj, function(err, newlyCreated){
+          if(err){
+            console.log(err);
+            reject('failed');
+          }
+          else{
+            console.log(newlyCreated);
+            resolve('worked');
+        }});
+      }
+    });
+  })
+}
 
 //feedback
 exports.feedback_get = function(req, res) {
@@ -93,21 +98,30 @@ exports.verify_email_get = function(req, res) {
   res.render('verifyEmail');
 };
 exports.verify_email_post = function(req, res) {
-  ValidateUser.findOneAndRemove(req.body.verificationCode === ValidateUser.validationKey && req.foundUser.email === validateUser.email, function (err, user){
+  ValidateUser.findOneAndRemove({validationKey: req.body.verificationCode}, function (err, userf){
     if(err) {
       res.flash('Wrong OTP')
       res.redirect('/verify-email');
     }
     console.log('inside otp check and remove');
-    user.findOneAndUpdate(req.foundUser._id === user._id, function(err, foundUserSchema){
+    user.findOne({email: userf.email}, function(err, foundUserSchema){
       if (err) {
+        req.flash('error', err.message);
         res.redirect('/');
       }
       console.log('inside altering user model');
-      foundUserSchema.emailValid = True;
-      foundUser.emailValid = True;
-      res.flash('success', 'Email verified');
-      res.redirect('/');
+      foundUserSchema.emailValid = true;
+      user.findByIdAndUpdate(foundUserSchema._id, foundUserSchema, {new:true}, function(err, newuser){
+        if(err){
+          req.flash('error', err.message);
+          res.redirect('/');
+        }
+        else{
+          console.log(newuser);
+          req.flash('success', 'Email verified');
+          res.redirect('/');
+        }
+      })
     } );
   });
 };
@@ -167,19 +181,18 @@ exports.instructor_register_get = function(req, res) {
 };
 
 exports.instructor_register_post = function(req, res){
-  console.log(req.body);
-  user.findOne({email: req.body.inst.email}). populate("inst"). exec(function(err, inst){
+  user.findOne({email: req.body.obj.email}). populate("inst"). exec(function(err, inst){
     if(err){
       console.log(err);
     }
     if(inst!=null){
       console.log("Instructor with the given email Id already exists!");
-      req.flash('error', "User Already Exists with: " + req.body.inst.emailConfirm);
+      req.flash('error', "User Already Exists with: " + req.body.obj.email);
       res.redirect('/beinstructor');
     }
     var newinst = new user({
-      email: req.body.inst.emailConfirm,
-      username: req.body.inst.username,
+      email: req.body.obj.email,
+      username: req.body.obj.username,
       userType: 'instructor',
       emailValid: false
     });
@@ -191,25 +204,31 @@ exports.instructor_register_post = function(req, res){
         res.redirect('/beinstructor');
       }
       else{
-        passport.authenticate("local")(req, res, function(){
-          sendEmailValidate(instnew.email, randomString());
-          req.body.inst.user = instnew._id;
-          instructor.create(req.body.inst, function(err, instructornew){
-            if(err){
-              req.flash('error', "Oops Something went wrong!");
-              console.log(err);
-              res.redirect('/beinstructor');
-            }
-            else{
-              console.log(instructornew);
-              req.flash('success', "Successfully Registered! Welcome "+ instnew.username);
-              res.redirect('/');
-            }
-          })
-        })
-      }
-    })
+        console.log("Verification");
+        sendEmailValidate(instnew.email, randomString()).then((suc)=>{
+          if(suc == 'worked'){
+            req.body.obj.user = instnew._id;
+            instructor.create(req.body.obj, function(err, instructornew){
+              if(err){
+                req.flash('error', "Oops Something went wrong!");
+                console.log(err);
+                res.redirect('/beinstructor');
+              }
+              else{
+                req.flash('error', "Verify Email with the OTP sent!");
+                res.redirect('/verify-email');
+              }
+            })
+          }
+          else{
+            console.log(suc);
+            req.flash('error', "Oops Something went wrong!");
+            res.redirect('/beinstructor');
+          }
+      })
+    }
   })
+        });
 }
 
 exports.newUserRegister_post = function(req, res){
