@@ -1,0 +1,101 @@
+<% include ./partials/header %>
+
+<style>
+
+#bg {
+  background-image: url("images/science-objects-seamless-animated-background-for-school-hd-motion-graphic_sxreexjwl_thumbnail-full01.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 80vh;
+  z-index: -2;
+}
+#bg h1{
+  padding: 50vh 0 0 14vh;
+  font-weight: 500;
+}
+
+.container{
+  margin: 3vh 0 3vh 0;
+}
+
+.card img{
+  height: 40vh;
+  width: 40vh;
+  margin: 1.2vh 0 0 7vh;
+}
+</style>
+
+ <div id="bg">
+   <h1>
+     Widget Edutech Pvt. Ltd. <br>
+     <small class="text-mute"> We are ready to solve all your Queries! </small>
+  </h1>
+ </div>
+ <div class="container">
+   <div class="row">
+     <div class="col-md-4">
+       <div class="card">
+        <img src="images/query.png" class="card-img-top" alt="Query answer">
+        <div class="card-body">
+          <h5 class="card-title">Submit your Query</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Enter your details so we can contact you</h6>
+          <form action="/query" method="post">
+            <div class="form-group">
+              <label for="name">Name: </label>
+              <input required class="form-control" type="text" placeholder="Name" name="query[name]" id="name"/>
+            </div>
+            <div class="form-group">
+              <label for="mno">Mobile Number: </label>
+              <input required type="text" class="form-control" placeholder="Mobile Number" name="query[mno]" id="mno"/>
+            </div>
+            <div class="form-group">
+              <label for="email">Email: </label>
+              <input required class="form-control" type="text" placeholder="Email" name="query[email]" id="email"/>
+            </div>
+            <div class="form-group">
+              <label for="desc">Description: </label>
+              <textarea required class="form-control" placeholder="Describe your query" name="query[desc]" id="desc"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+     </div>
+     <div class="col-md-4">
+       <div class="card">
+        <img src="images/call.png" class="card-img-top" alt="Call answer">
+        <div class="card-body">
+          <h5 class="card-title">Get us on Call</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Drop your number and our team will contact you back in next 120 mins</h6>
+          <form action="/call" method="post">
+            <div class="form-group">
+              <label for="mno"> Mobile Number: </label>
+              <input type="text" class="form-control" required name="mno" id="mno" placeholder = "Mobile Number"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+     </div>
+     <div class="col-md-4">
+       <div class="card">
+        <img src="images/socialmedia.png" class="card-img-top" alt="Social Media answer">
+        <div class="card-body">
+          <h5 class="card-title">Reach our Social Media Accounts</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Contact us on our social media platforms and get all your queries solved</h6>
+          <a class="btn btn-social btn-facebook btn-sm" href="#"> <span class="fa fa-facebook"></span>
+          Reach via Facebook</a>
+          <a class="btn btn-social btn-google btn-sm" href="#"> <span class="fa fa-google"></span>
+          Reach via Google</a>
+          <a class="btn btn-social btn-linkedin btn-sm" href="#"> <span class="fa fa-linkedin"></span>
+          Reach via LinkedIn</a>
+          <a class="btn btn-social btn-twitter btn-sm" href="#"> <span class="fa fa-twitter"></span>
+          Reach via Twitter</a>
+        </div>
+      </div>
+     </div>
+   </div>
+ </div>
+
+
+ <% include ./partials/footer %>
