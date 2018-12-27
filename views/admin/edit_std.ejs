@@ -1,0 +1,37 @@
+<% include ../partials/header %>
+
+
+<style media="screen">
+  .container{
+    padding: 2vh 0 2vh 0;
+  }
+</style>
+
+    <div class="container">
+      <div class="panel text-center">
+        <h3>Edit Instructor</h3>
+      </div>
+        <form method="post" action="/admin/<%=data._id%>/student/edit?_method=PUT">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="Full Name">Full Name:</label>
+              <input type="text" name="obj[fullName]" class="form-control" value=<%= data.fullName %>>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="email">Email:</label>
+              <input type="email" name="obj[email]" class="form-control" id="inputEmail" value= <%= data.email %>>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="mobileNumber">Mobile Number:</label>
+              <input type="text" name="obj[mobileNumber]" class="form-control" id="inputMobNo" value=<%= data.mobileNumber %>>
+            </div>
+          </div>
+        <div class="container text-center col-6">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+        </div>
+
+ <% include ../partials/footer %>

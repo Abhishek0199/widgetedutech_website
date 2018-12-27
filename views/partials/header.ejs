@@ -6,12 +6,17 @@
   <title>Home Widget EduTech</title>
   <% include ./bootstrap4 %>
   <% include ./icons %>
+  <style>
+    nav{
+      background-image: linear-gradient(rgb(121, 121, 210), rgb(51, 51, 153));
+    }
+  </style>
 
 </head>
 
 <body>
 
-  <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="#" disabled><img src="images/headerLogo.png" width="200" height="40" disabled="true" alt="WidgetEduTech Logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -29,14 +34,11 @@
           <a class="nav-link" href="/courses">Course Structure</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contact Us</a>
+          <a class="nav-link" href="/contact-us">Contact Us</a>
         </li>
       </ul>
       <ul class="navbar-nav navbar-right">
         <% if(!currentUser){%>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
           </li>
@@ -52,12 +54,12 @@
     </div>
   </nav>
 
-<div class="flash-container">
+<div class="container-fluid text-center">
      <% if(error && error.length > 0) { %>
-       <div class="alert alert-light"><p class="text-danger"><%= error %></p></div>
+       <div class="alert alert-danger" role="alert"><%= error %></div>
      <% } %>
 
      <% if(success && success.length > 0) { %>
-       <div class="alert alert-light"><p class="text-dark"><%= success %></p></div>
+       <div class="alert alert-success" role="alert"><%= success %></div>
      <% } %>
   </div>

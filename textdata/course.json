@@ -1,0 +1,65 @@
+{
+  "science": [
+    {
+      "text":"Physics",
+      "value":"phy" },
+    {
+      "text": "Chemistry",
+      "value": "chem"},
+    {
+      "text": "Biology",
+      "value": "bio"
+    },
+    {
+      "text": "Maths",
+      "value": "math"
+    },
+    {
+      "text": "Economics",
+      "value": "eco"
+    },
+    {
+      "text": "Computer Science",
+      "value": "compsc"
+    },
+    {
+      "text": "Physical Education",
+      "value": "pe"
+    }],
+    "commerce": [
+      {
+        "text": "Accounts",
+        "value": "acc"
+      },
+      {
+        "text": "Business Studies",
+        "value": "bstd"
+      },
+      {
+        "text": "Economics",
+        "value": "eco"
+      },
+      {
+        "text": "Statistics",
+        "value": "stat"
+      }
+    ],
+    "arts": [
+      {
+        "text": "History",
+        "value": "hist"
+      },
+      {
+        "text": "Literature",
+        "value": "lit"
+      },
+      {
+        "text": "Psychology",
+        "value": "psy"
+      },
+      {
+        "text": "Sociology",
+        "value": "socio"
+      }
+    ]
+}
