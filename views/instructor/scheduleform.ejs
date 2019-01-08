@@ -1,0 +1,225 @@
+<% include ../partials/header %>
+
+<style>
+  .container{
+    padding: 6vh 0 2vh 0;
+  }
+</style>
+
+<div class="container">
+  <h3 class="text-center">
+    Schedule a Live Video Lecture
+  </h3><hr>
+  <form action='/instructor/schedule' method="post">
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label for="subject"> Subject: </label>
+        <input type="text" required class="form-control" name="obj[subject]" id="subject" placeholder="Enter Subject"/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="topic"> Topic: </label>
+        <input type="text" required class="form-control" name="obj[topic]" id="topic" placeholder="Enter Topic"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label for="date"> Date: </label>
+        <input type="date" required class="form-control" name="date" id="date" placeholder="Enter Date"/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="time"> Time: </label>
+        <input type="time" required class="form-control" name="time" id="time" placeholder="Enter Time"/>
+      </div>
+      <input type="hidden" required name="cast_id" id="cast_id">
+      <input type="hidden" required name="stream_id" id="stream_id">
+    </div>
+    <button class="btn btn-secondary" id="authorize-button"> Authorize </button>
+    <button class="btn btn-primary" id="submit-button" type="submit" style="display:none"> Submit </button>
+
+  </form>
+</div>
+
+<script type="text/javascript">
+  // Client ID and API key from the Developer Console
+  var CLIENT_ID = '<%= client_secret %>';
+
+  // Array of API discovery doc URLs for APIs used by the quickstart
+  var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
+
+  // Authorization scopes required by the API. If using multiple scopes,
+  // separated them with spaces.
+  var SCOPES = 'https://www.googleapis.com/auth/youtube';
+
+  var authorizeButton = document.getElementById('authorize-button');
+  /**
+   *  On load, called to load the auth2 library and API client library.
+   */
+  function ClientLoad() {
+    gapi.load('client:auth2', initClient)
+  }
+
+  /**
+   *  Initializes the API client library and sets up sign-in state
+   *  listeners.
+   */
+  function initClient() {
+    gapi.client.init({
+      discoveryDocs: DISCOVERY_DOCS,
+      clientId: CLIENT_ID,
+      scope: SCOPES
+    }).then(function () {
+      // Handle the initial sign-in state.
+      document.getElementById('authorize-button').addEventListener('click', function(){
+        // Listen for sign-in state changes.
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+      })
+      authorizeButton.onclick = handleAuthClick;
+    });
+  }
+
+  /**
+   *  Called when the signed in status changes, to update the UI
+   *  appropriately. After a sign-in, the API is called.
+   */
+  function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+      insert().then((res)=>{
+        if(res=='success'){
+          document.getElementById('submit-button').style.display = 'block';
+        }
+      });
+    } else {
+      window.alert('You need to authorize first! Click on Schedule');
+    }
+  }
+
+  /**
+   *  Sign in the user upon button click.
+   */
+  function handleAuthClick(event) {
+    gapi.auth2.getAuthInstance().signIn();
+  }
+
+  /**
+   *  Sign out the user upon button click.
+   */
+  /*function handleSignoutClick(event) {
+    gapi.auth2.getAuthInstance().signOut();
+  }*/
+
+  /**
+   * Append text to a pre element in the body, adding the given message
+   * to a text node in that element. Used to display info from API response.
+   *
+   * @param {string} message Text to be placed in pre element.
+   */
+  /*function appendPre(message) {
+    var pre = document.getElementById('content');
+    var textContent = document.createTextNode(message + '\n');
+    pre.appendChild(textContent);
+  }*/
+
+  /**
+   * Print files.
+   */
+  function insert() {
+    return new Promise((resolve, reject)=>{
+      var title = document.getElementById('subject').value + ' ' + document.getElementById('topic').value;
+      var date = new Date(document.getElementById('date').value);
+      var x = (document.getElementById('time').value).split(":");
+      date.setHours(x[0]);
+      date.setMinutes(x[1]);
+      var broadcastParams = broadcastParams = {
+        "part": "snippet,status,contentDetails",
+        "resource": {
+            "snippet": {
+                "title": title,
+                "scheduledStartTime": date,
+            },
+            "status": {
+                "privacyStatus": "unlisted",
+            },
+            "contentDetails": {
+                "monitorStream": {
+                    "enableMonitorStream": true,
+                }
+            }
+        }
+      }
+      gapi.client.youtube.liveBroadcasts.insert(broadcastParams, function (err, response){
+        if(err){
+          console.log(err);
+          reject('error');
+        }
+        else{
+          document.getElementById('cast_id').value = response.id;
+          var streamparams = {
+            "part": "snippet, status, cdn"
+            "resource":{
+              "cdn": {
+                "format" : "720p",
+                "ingestionType": "rtmp"
+              },
+              "snippet":{
+                "title": title
+              },
+              "status": {
+                "streamStatus": "created"
+              }
+            }
+          }
+          gapi.client.youtube.liveStream.insert(streamparams, function(err, res){
+            if(err){
+              console.log(err);
+              reject(err);
+            }
+            else{
+              document.getElementById('stream_id').value =  res.id;
+              doucment.getElementById('stream_name').value=res.cdn.ingestionInfo.streamName;
+              var bindparams = {
+                "part": "snippet, status",
+                "resource":{
+                  "id": response.id,
+                  "streamId": res.id
+                }
+              }
+              gapi.client.youtube.liveBroadcasts.bind(bindparams, function(err, result){
+                if(err){
+                  console.log(err);
+                  reject(err);
+                }
+                else{
+                  resolve('success');
+                }
+              })
+            }
+          })
+        }
+      });
+    })
+
+  }
+
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};ClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#date').change(function(){
+      var x = $('#date').val();
+      var date = new Date(x);
+      if(date < Date.now()){
+        window.alert('Enter valid Date!');
+      }
+    })
+  });
+</script>
+
+
+
+<% include ../partials/footer %>

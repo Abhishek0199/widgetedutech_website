@@ -10,6 +10,7 @@ var LocalStrategy = require('passport-local');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
+var methodOverride = require('method-override');
 //var MongoClient = require('mongodb').MongoClient;
 //var url = 'mongodb://localhost/development-studymantra';
 
@@ -45,9 +46,10 @@ app.use(require("express-session")({
 app.use(flash());
 app.use(logger('dev'));
 
-
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());

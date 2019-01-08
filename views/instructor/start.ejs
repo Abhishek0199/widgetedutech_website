@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+
+<style>
+  .container{
+    padding: 4vh 0 2vh 0;
+  }
+  .card{
+    margin: 2vh 0 2vh 0;
+  }
+</style>
+
+<div class = "container">
+  <% for(var i=0; i<data.length; i++){%>
+    <div class="card">
+      <div class="card-body">
+        <a href="#"><h4 class="text-center card-title"> <%= data[i].title %></h4> </a>
+        <p class="text-center card-subtitle text-muted"> <%= data[i].timestamp %> </p>
+      </div>
+    </div>
+  <%}%>
+</div>
+
+<% include ../partials/footer %>
