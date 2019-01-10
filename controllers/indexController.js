@@ -352,6 +352,19 @@ exports.student_register_post = function(req, res){
         });
 }
 
+//View all Student videos
+exports.student_videos = function(req, res){
+  schedule.find({}, function(err, vid){
+    if(err){
+      console.log(err);
+      res.redirect('/');
+    }
+    else{
+      res.render('student/videos', {vid: vid});
+    }
+  })
+}
+
 //Schedule and Start Section
 exports.instructor_schedule_get = function(req, res){
   var data = fs.readFileSync('client_secret.json');
@@ -360,7 +373,12 @@ exports.instructor_schedule_get = function(req, res){
 }
 
 exports.instructor_schedule_post = function(req, res){
-  console.log(req.body);
+  //console.log(req.body);
+  req.body.obj.cast_id = req.body.cast_id;
+  req.body.obj.stream_name = req.body.stream_name;
+  req.body.obj.stream_id = req.body.stream_id;
+  req.body.obj.iframe_embed = req.body.iframe;
+  req.body.obj.url = req.body.url;
   var date = new Date(req.body.date);
   var x = (req.body.time).split(":");
   date.setHours(x[0]);
@@ -374,7 +392,8 @@ exports.instructor_schedule_post = function(req, res){
       res.redirect('/instructor/schedule');
     }
     else{
-      console.log(sche);
+      //console.log(sche);
+
       req.flash('success', 'Your Lecture has been Scheduled!');
       res.redirect('/');
     }

@@ -45,6 +45,7 @@ router.post("/login", indexController.login_post);
 
 router.get('/studentregister', indexController.student_register_get);
 router.post('/studentregister', indexController.student_register_post);
+router.get('/student/allvideos', isLoggedin_std, indexController.student_videos);
 router.get('/instructor/schedule',isLoggedin_inst, indexController.instructor_schedule_get);
 router.post('/instructor/schedule', isLoggedin_inst, indexController.instructor_schedule_post);
 router.get('/instructor/start', isLoggedin_inst, indexController.instructor_start);
