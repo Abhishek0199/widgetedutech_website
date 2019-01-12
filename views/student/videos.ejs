@@ -13,9 +13,9 @@
 <div class="container">
   <% for(var i=0; i<vid.length; i++){%>
     <div class="card">
-      <h4 class="card-title text-center text-black-50" onclick="myfunc('<%= vid[i].iframe_embed%>')" id="title"><%= vid[i].title%></h4>
-      <p class="card-subtitle text-muted">Click on the title above to load the video</p>
-      <div class="container text-center" id="<%= vid[i].iframe_embed %>" style="display: none">
+      <hr><h4 class="card-title text-center" onclick="myfunc('<%= vid[i].cast_id %>')" id="title"><%= vid[i].title%></h4>
+      <p class="card-subtitle text-muted text-center">Click on the title above to load the video</p><hr>
+      <div class="container text-center" id="<%= vid[i].cast_id %>" style="display: none">
         <%- vid[i].iframe_embed %>
       </div>
     </div>
@@ -24,7 +24,13 @@
 
 <script type="text/javascript">
 function myfunc(id){
-  document.getElementById(id).style.display = 'block';
+  if(document.getElementById(id).style.display == 'block'){
+    document.getElementById(id).style.display = 'none';
+  }
+  else
+  {
+    document.getElementById(id).style.display = 'block';
+  }
 }
 
 </script>

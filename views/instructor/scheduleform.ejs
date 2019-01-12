@@ -185,13 +185,11 @@ function stopform(value){
   }
   else{
     if(gapi.auth2.getAuthInstance().isSignedIn.get() == true){
-      window.alert('loading');
       document.getElementById('gif').style.display = 'block';
       document.getElementById('form-input').style.display = 'none';
       return false;
     }
     else{
-      window.alert('loading');
       document.getElementById('gif').style.display = 'block';
       document.getElementById('form-input').style.display = 'none';
       gapi.auth2.getAuthInstance().signIn();
