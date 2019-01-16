@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(
   {
-    email: {type: String, required: true, trim: true, unique: true},
+    email: {type: String, trim: true, unique: true},
+    googleid: {type: String},
 	  username: {type: String, required: true, trim: true, unique: true},
     userType: {type: String, enum: ['student', 'instructor', 'admin'], required: true},
     password: {type: String},
