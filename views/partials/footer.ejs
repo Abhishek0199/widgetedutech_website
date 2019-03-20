@@ -6,9 +6,8 @@
   bottom: 0;
   width: 100%;
   font-size: 1.05rem;
-  background-image: linear-gradient(rgb(0, 0, 0), rgb(64, 64, 191));
+  background-image: linear-gradient(rgb(64, 64, 191), rgb(0, 0, 0));
   color: white;
-  text-align: center;
 }
 .footer .container{
   padding-top: 2vh;
@@ -18,12 +17,50 @@
   text-decoration: none;
   color: white;
 }
+
+ul{
+  list-style: none;
+}
+ul li, h6{
+  padding-top: 2vh;
+}
 </style>
    <div class="footer">
      <div class="container">
-       <p class="text-right"><a href="#">Contact Us</a></p>
-       <p class="text-right"><a href="/feedback">Feedback</a></p>
-       <p class="text-right"><a href="/about-us">About Us</a></p>
+       <div class="row">
+         <div class="col-md-3">
+           <h5 class="text-center">Quick Links</h5>
+           <ul>
+             <li>Ncert Solutions</li>
+             <li> Reference Books </li>
+             <li>Doubt Book</li>
+             <li>Past Year Papers</li>
+           </ul>
+         </div>
+         <div class="col-md-3">
+           <h5 class="text-center"><a href="/about-us">About Us</a></h5>
+           <ul>
+             <li>Benefits</li>
+             <li>Terms and Conditions </li>
+             <li>Frequently Asked Questions (FAQs)</li>
+             <li>Blog</li>
+             <li>Privacy Policy</li>
+           </ul>
+         </div>
+         <div class="col-md-3">
+           <h5 class="text-center"><a href="/contact-us">Social Links/Contact Us</a></h5>
+           <ul>
+             <li><a href="https://www.linkedin.com/company/widgetedutech/about/?viewAsMember=true"><span class="fa fa-linkedin-square"></span> LinkedIn</a> </li>
+             <li><a href="https://www.facebook.com/learngiz/?modal=admin_todo_tour"><span class="fa fa-facebook-official"></span> Facebook</a> </li>
+             <li><a href="https://twitter.com/learngiz"><span class="fa fa-twitter-square"></span> Twitter</a> </li>
+           </ul>
+         </div>
+         <div class="col-md-3">
+           <h6 class="text-right"><a href="/studentregister">Sign Up</a></h6>
+           <h6 class="text-right"><a href="/login">Login</a></h6>
+           <h6 class="text-right"><a href="/beinstructor">Become a Instructor</a></h6>
+         </div>
+       </div>
      </div>
      <div class="container">
        <p class="text-center"> &copy All Rights Reserved Widget EduTech Pvt. Ltd. </p>

@@ -1,0 +1,63 @@
+<% include ../partials/header %>
+<% include ../partials/header_admin %>
+
+
+<style media="screen">
+  .container{
+    padding: 2vh 0 2vh 0;
+  }
+</style>
+
+    <div class="container">
+      <div class="panel text-center">
+        <h3>Edit Instructor</h3>
+      </div>
+        <form method="post" action="/admin/<%=data._id%>/instructor/delete?_method=DELETE">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="Full Name">Full Name:</label>
+              <input disabled type="text" name="obj[fullName]" class="form-control" value=<%= data.fullName %>>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="email">Email:</label>
+              <input disabled type="email" name="obj[email]" class="form-control" id="inputEmail" value= <%= data.email %>>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="mobileNumber">Mobile Number:</label>
+              <input disabled type="text" name="obj[mobileNumber]" class="form-control" id="inputMobNo" value=<%= data.mobileNumber %>>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-3">
+             <label for="ctry">Country:</label>
+             <input disabled type="text" name="obj[country]" class="form-control" id="ctry" value=<%= data.country %>>
+            </div>
+            <div class="form-group col-md-3">
+             <label for="state">State:</label>
+             <input disabled type="text" name="obj[state]" class="form-control" id="state" value=<%= data.state %>>
+            </div>
+            <div class="form-group col-md-3">
+             <label for="city">City:</label>
+             <input disabled type="text" name="obj[city]" class="form-control" id="city" value=<%= data.city %>>
+            </div>
+            <div class="form-group col-md-3">
+             <label for="zip">ZipCode:</label>
+             <input disabled type="text" name="obj[pinCode]" class="form-control" id="zip" value=<%= data.pinCode %>>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label for="addr"> Address: </label>
+              <input disabled type="text" name="obj[address]" class="form-control" id="addr" value= <%=data.address%>>
+            </div>
+          </div>
+        <div class="container text-center col-6">
+          <button type="submit" class="btn btn-primary">Delete</button>
+          <a href="/allinstructors"><button class="btn btn-light">Cancel</button></a>
+        </div>
+        </form>
+        </div>
+
+ <% include ../partials/footer %>

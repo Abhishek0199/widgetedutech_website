@@ -1,0 +1,53 @@
+<% include ../partials/header %>
+<% include ../partials/header_instructor %>
+
+<style>
+    .buttons{
+        margin: 2vh 2vh 0 2vh;
+    }
+</style>
+<div class="buttons row">
+    <a href ="/"><button class="btn btn-primary">Go Back</button></a>
+    <button class="btn btn-secondary" data-target="#exampleModal" data-toggle="modal">Clear Canvas</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to clear the Canvas?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="yes" class="btn btn-secondary" data-dismiss="modal">Yes</button>
+                <button type="button" id="cancel" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src='/js/canvas-designer-widget.js'></script>
+
+<script>
+    var designer = new CanvasDesigner();
+    designer.widgetHtmlURL = '/widget.html';
+    designer.widgetJsURL = '/js/widget.js';  
+</script>
+
+<script>
+    designer.appendTo(document.body || document.documentElement);
+</script>
+
+<script>
+    //document.getElementById('nav').classList.remove('sticky-top');
+
+    document.getElementById('yes').addEventListener('click', function(){
+        designer.clearCanvas();
+    })
+</script>
+
+ <% include ../partials/footer %>

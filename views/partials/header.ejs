@@ -6,13 +6,38 @@
   <title>Home Widget EduTech</title>
   <% include ./bootstrap4 %>
   <% include ./icons %>
+  <style>
+    #nav{
+      background-image: linear-gradient(rgb(121, 121, 210), rgb(51, 51, 153));
+    }
+    .btn-fb{
+      border:1px solid rgb(59,89,152);
+      padding: 2vh 2vh 2vh 2vh;
+      margin: 3vh;
+    }
+    .btn-fb:hover{
+      background-color: rgb(59,89,152);
+      color:white;
+    }
+    .btn-goog{
+      border: 1px solid rgb(219,68,55);
+      padding: 2vh;
+      margin: 3vh;
+      color: red;
+    }
+    .btn-goog:hover{
+      background-color: rgb(219,68,55);
+      color:white;
+    }
+  </style>
 
 </head>
 
 <body>
+  <script src="https://embed.small.chat/TDU5N5CGKGFC7Z804A.js" async></script>
 
-  <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
-    <a class="navbar-brand" href="#" disabled><img src="images/headerLogo.png" width="200" height="40" disabled="true" alt="WidgetEduTech Logo"></a>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark" id="nav">
+    <a class="navbar-brand" href="#" disabled><img src="/images/headerLogo.png" width="200" height="40" disabled="true" alt="WidgetEduTech Logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -29,16 +54,17 @@
           <a class="nav-link" href="/courses">Course Structure</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contact Us</a>
+          <a class="nav-link" href="/contact-us">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/products">Our Products</a>
         </li>
       </ul>
       <ul class="navbar-nav navbar-right">
         <% if(!currentUser){%>
           <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
+            <!-- Trigger the modal with a button -->
+            <a class="nav-link" data-toggle="modal" data-target="#myModal">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/beinstructor">Become an Instructor</a>
@@ -51,13 +77,59 @@
       </ul>
     </div>
   </nav>
+  
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="panel panel-default">
+              <h3 class="panel heading text-center"><b>Login</b></h3><hr>
+              <p>Please enter your Username and Password</p>
+            </div>
+            <form action="/login" method="post">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <input class="form-control" type="text" name="username" placeholder="username">
+                </div>
+                <div class="form-group col-md-6">
+                  <input class="form-control" type="password" name="password" placeholder="password">
+                </div>
+              </div>
+              <div class="container col-md-6 text-center">
+                <a href="/studentregister">Does not have an account? Register Here </a>
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
+            <hr>
+            <div class="container text-center">
+              <a class="btn-fb btn-sm" href="#">Sign in with Facebook   <span class="fa fa-facebook-square"></span></a><br><br>
+              <a class="btn-goog btn-sm" href="/auth/google">Sign in with Google  <span class="fa fa-google"></span></a>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
 
-<div class="flash-container">
+
+<div class="container-fluid text-center">
      <% if(error && error.length > 0) { %>
-       <div class="alert alert-light"><p class="text-danger"><%= error %></p></div>
+       <div class="alert alert-danger" role="alert"><%= error %></div>
      <% } %>
 
      <% if(success && success.length > 0) { %>
-       <div class="alert alert-light"><p class="text-dark"><%= success %></p></div>
+       <div class="alert alert-success" role="alert"><%= success %></div>
      <% } %>
   </div>

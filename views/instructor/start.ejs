@@ -1,0 +1,26 @@
+<% include ../partials/header %>
+<% include ../partials/header_instructor %>
+
+<style>
+  .container{
+    padding: 4vh 0 2vh 0;
+  }
+  .card{
+    margin: 2vh 0 2vh 0;
+  }
+</style>
+
+<div class = "container">
+  <% for(var i=0; i<data.length; i++){%>
+    <div class="card">
+      <div class="card-body">
+        <a href="https://www.youtube.com/live_event_analytics?v=<%= data[i].cast_id %>&ar=2" target="_blank"><h4 class="text-center card-title"> <%= data[i].title %></h4> </a>
+        <p class="text-center card-subtitle text-muted">Time Scheduled: <%= data[i].timestamp %> </p>
+        <p class="text-center card-text"> Stream Name is: <%= data[i].stream_name %> </p>
+        <p class="text-center card-text"> Stream URL is: <%= data[i].url %> </p>
+      </div>
+    </div>
+  <%}%>
+</div>
+
+<% include ../partials/footer %>

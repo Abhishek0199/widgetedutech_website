@@ -1,0 +1,222 @@
+<% include ../partials/header %>
+<% include ../partials/header_instructor %>
+
+<style>
+  .container{
+    padding: 6vh 0 2vh 0;
+  }
+</style>
+
+<div class="container text-center" id="gif" style="display:none;">
+  <img src="/images/loading.gif" alt="Loading!">
+</div>
+
+<div class="container" id="form-input">
+  <h3 class="text-center">
+    Schedule a Live Video Lecture
+  </h3><hr>
+  <form action='/instructor/schedule' method="post" onsubmit="return stopform('false');" id="schedule">
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label for="subject"> Subject: </label>
+        <input type="text" required class="form-control" name="obj[subject]" id="subject" placeholder="Enter Subject"/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="topic"> Topic: </label>
+        <input type="text" required class="form-control" name="obj[topic]" id="topic" placeholder="Enter Topic"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label for="date"> Date: </label>
+        <input type="date" required class="form-control" name="date" id="date" placeholder="Enter Date"/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="time"> Time: </label>
+        <input type="time" required class="form-control" name="time" id="time" placeholder="Enter Time"/>
+      </div>
+      <input type="hidden" required name="cast_id" id="cast_id">
+      <input type="hidden" required name="stream_id" id="stream_id">
+      <input type="hidden" required name="stream_name" id="stream_name">
+      <input type="hidden" required name="iframe" id="iframe">
+      <input type="hidden" required name="url" id="url">
+    </div>
+    <button class="btn btn-secondary" id="authorize-button"> Authorize </button>
+    <button class="btn btn-primary" id="submit-button" type="submit"> Schedule </button>
+
+  </form>
+</div>
+
+<script type="text/javascript">
+  // Client ID and API key from the Developer Console
+  var CLIENT_ID = '<%= client_secret %>';
+
+  // Array of API discovery doc URLs for APIs used by the quickstart
+  var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
+
+  // Authorization scopes required by the API. If using multiple scopes,
+  // separated them with spaces.
+  var SCOPES = 'https://www.googleapis.com/auth/youtube';
+
+  var authorizeButton = document.getElementById('authorize-button');
+  /**
+   *  On load, called to load the auth2 library and API client library.
+   */
+  function ClientLoad() {
+    gapi.load('client:auth2', {
+      callback: function(){
+        initClient();
+      },
+      onerror: function(err){
+        window.alert('gapi.client returned an error' + err);
+      },
+      timeout: 5000, // 5 seconds.
+      ontimeout: function() {
+        // Handle timeout.
+        window.alert('gapi.client could not load in a timely manner!');
+      }
+    });
+  }
+
+  /**
+   *  Initializes the API client library and sets up sign-in state
+   *  listeners.
+   */
+  function initClient() {
+    gapi.client.init({
+      discoveryDocs: DISCOVERY_DOCS,
+      clientId: CLIENT_ID,
+      scope: SCOPES
+    }).then(function (err, response) {
+      // Handle the initial sign-in state.
+
+        // Listen for sign-in state changes.
+        if(gapi.auth2.getAuthInstance().isSignedIn.get() == false){
+          gapi.auth2.getAuthInstance().signIn();
+        }
+        //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        document.getElementById('submit-button').addEventListener('click', function(){
+          if(gapi.auth2.getAuthInstance().isSignedIn.get() == true){
+            insert();
+          }
+          else{
+            handleAuthClick();
+          }
+        })
+      authorizeButton.onclick = handleAuthClick;
+    });
+  }
+  /**
+   *  Sign in the user upon button click.
+   */
+  function handleAuthClick(event) {
+    gapi.auth2.getAuthInstance().signIn();
+  }
+
+  /**
+   * Print files.
+   */
+  function insert() {
+      var title = document.getElementById('subject').value + ' ' + document.getElementById('topic').value;
+      var date = new Date(document.getElementById('date').value);
+      var x = (document.getElementById('time').value).split(":");
+      date.setHours(x[0]);
+      date.setMinutes(x[1]);
+      //date = date.toUTCString();
+      let broadcastParams= {
+        "part": "snippet,status,contentDetails",
+        "resource": {
+            "snippet": {
+                "title": title,
+                "scheduledStartTime": date,
+            },
+            "status": {
+                "privacyStatus": "unlisted",
+            },
+            "contentDetails": {
+                "monitorStream": {
+                    "enableMonitorStream": true,
+                }
+            }
+        }
+      }
+      gapi.client.youtube.liveBroadcasts.insert(broadcastParams).then(function(res){
+        //window.alert('worked');
+        //console.log(res);
+        document.getElementById('iframe').value = res.result.contentDetails.monitorStream.embedHtml;
+        document.getElementById('cast_id').value = res.result.id;
+        let streamParams = {
+    			"part": "snippet, status, cdn",
+    			"resource":{
+    				"cdn": {
+    					"format" : "720p",
+    					"ingestionType": "rtmp"
+    				},
+    				"snippet":{
+    					"title": title
+    				},
+    				"status": {
+    					"streamStatus": "created"
+    				}
+    			}
+    		}
+        gapi.client.youtube.liveStreams.insert(streamParams).then(function(res1){
+          //console.log(res1);
+          document.getElementById('stream_id').value = res1.result.id;
+          document.getElementById('stream_name').value = res1.result.cdn.ingestionInfo.streamName;
+          document.getElementById('url').value = res1.result.cdn.ingestionInfo.ingestionAddress;
+          let bindparams = {
+  					"part": "snippet, status",
+            "id": res.result.id,
+  					"resource":{
+  						"streamId": res1.result.id
+  					}
+  				}
+          gapi.client.youtube.liveBroadcasts.bind(bindparams).then(function(result){
+            //console.log(result);
+            document.getElementById('schedule').submit();
+          })
+        })
+      });
+
+  }
+function stopform(value){
+  if(value=='true'){
+    return true;
+  }
+  else{
+    if(gapi.auth2.getAuthInstance().isSignedIn.get() == true){
+      document.getElementById('gif').style.display = 'block';
+      document.getElementById('form-input').style.display = 'none';
+      return false;
+    }
+    else{
+      document.getElementById('gif').style.display = 'block';
+      document.getElementById('form-input').style.display = 'none';
+      gapi.auth2.getAuthInstance().signIn();
+      return false;
+    }
+  }
+}
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};ClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#date').change(function(){
+      var x = $('#date').val();
+      var date = new Date(x);
+      if(date < Date.now()){
+        window.alert('Enter valid Date!');
+      }
+    })
+  });
+</script>
+
+
+
+<% include ../partials/footer %>

@@ -1,0 +1,38 @@
+<% include ../partials/header %>
+<% include ../partials/header_student %>
+
+<style>
+  .container{
+    padding: 4vh 0 2vh 0;
+  }
+</style>
+
+<div class="container">
+  <h4 class="text-center"> Create a doubt </h4>
+  <hr>
+  <form action = "/student/doubt-book" method="post" enctype="multipart/form-data">
+    <div class="row col-md-10">
+      <label for="area1"> Describe your Doubt.. </label>
+      <textarea id="area1" cols="100" rows="5" name="doubt" required> </textarea>
+    </div><br>
+    <div class="form-group">
+      <label for="file"> Upload a file(image, pdf, doc etc.)(optional)(Max: 500kB) </label>
+      <input type="file" id="file" name="file" accept="application/pdf,application/msword,image/jpeg,image/png, image/jpg">
+    </div>
+    <button type="submit" class="btn btn-primary"> Submit </button>
+  </form>
+</div>
+
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script>
+  nicEditors.allTextAreas();
+  var file = document.getElementById('file');
+  file.onchange = function(){
+    if(this.files[0].size > 512000){
+      window.alert('File is too big!');
+      this.value = "";
+    }
+  }
+</script>
+
+<% include ../partials/footer %>
